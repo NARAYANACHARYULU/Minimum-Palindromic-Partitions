@@ -1,0 +1,40 @@
+package com.company;
+import java.util.*;
+class Graph {
+    public static int minPartitions(String s){
+        if (s.length() == 0) {
+            return 0;
+        }
+
+        int[] arr = new int[s.length()];
+        boolean isPalindrome[][] = new boolean[s.length()][s.length()];
+        for (int i = 1; i < s.length(); i++)
+        {
+            int min = i;
+            for (int j = 0; j <= i; j++)
+            {
+                if (s.charAt(i) == s.charAt(j) && (i <= j + 1 || isPalindrome[i - 1][j + 1]))
+                {
+                    isPalindrome[i][j] = true;
+                    if(j==0)
+                    {
+                        min=Math.min(min,0);
+                    }
+                    else
+                    {
+                        min=Math.min(min,1+arr[j-1]);
+                    }
+                }
+            }
+            arr[i] = min;
+        }
+        return arr[s.length() - 1];
+    }
+    public static void main(String[] args)
+    {
+        Scanner in=new Scanner(System.in);
+        String s=in.next();
+        System.out.print(minPartitions(s));
+
+    }
+}
